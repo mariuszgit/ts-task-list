@@ -6,10 +6,34 @@ function Ship() {
     this.x = VAR.W/2;
     this.y = VAR.H/2;
     //
+    this.modX = 0;
+    this.modY = 0;
+    //
+    this.acc = 0.0004;
+    //
+    this.maxMod = 0.11;
+    //
     this.points = [{},{},{}];
 }
 
 Ship.prototype.draw = function() {
+    if(Game.key_38) {
+        this.modX = Math.max(-this.maxMod*VAR.D, Math.min(this.maxMod*VAR.D, this.modX+Math.sin(Math.PI/180*this.a)*this.acc*VAR.D));
+        this.modY = this.modY-Math.cos(Math.PI/180*this.a)*this.acc*VAR.D;
+    } else {
+        this.modX = this.modX*0.95;
+        this.modX = Math.abs(this.modX)<0.0001 ? 0 : this.modX;
+        this.modY = this.modY*0.95;
+        this.modY = Math.abs(this.modY)<0.0001 ? 0 : this.modY;
+    }
+
+    if(Game.key_37 || Game.key_39) {
+        this.a = this.a + 6*( Game.key_37 ? -1 : 1);
+    }
+
+    this.x += this.modX;
+    this.y += this.modY;
+
     Game.ctx.beginPath();
     for (i=0; i<3; i++) {
         this.tmp_a = i===0 ? this.a : (this.a+180+ (i==1 ? this.rear_a : -this.rear_a));
@@ -26,4 +50,22 @@ Ship.prototype.draw = function() {
     }
     Game.ctx.closePath();
     Game.ctx.stroke();
+
+    if (Game.key_38 && this.draw_thrust) {
+        this.draw_thrust = false;
+        Game.ctx.beginPath();
+    for (i=0; i<3; i++) {
+        this.tmp_a = i!=1 ? this.a+180+(i===0 ? -this.rear_a+14 : this.rear_a-14) : this.a+180;
+        this.tmp_r = i===1 ? this.r : this.r*0.5;
+        if (i==0) {
+            Game.ctx.moveTo(Math.sin(Math.PI/180*this.tmp_a)*this.tmp_r*VAR.D+this.x, -Math.cos(Math.PI/180*this.tmp_a)*this.tmp_r*VAR.D+this.y);
+        } else {
+            Game.ctx.lineTo(Math.sin(Math.PI/180*this.tmp_a)*this.tmp_r*VAR.D+this.x, -Math.cos(Math.PI/180*this.tmp_a)*this.tmp_r*VAR.D+this.y);
+        }
+    }
+    Game.ctx.stroke();
+    } else if (Game.key_38 && !this.draw_thrust) {
+        this.draw_thrust = true;
+    }
+    
 }

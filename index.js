@@ -30,7 +30,17 @@ Game = {
     onKey: function(ev) {
         if (ev.keyCode==32 || ev.keyCode==37 || ev.keyCode==38 || ev.keyCode==39) {
             ev.preventDefault();
-            
+            if (ev.type=='keydown' && !Game['key_'+ev.keyCode]) {
+                Game['key_'+ev.keyCode] = true;
+                if (ev.keyCode == 37) {
+                    Game.key_39 = false;
+                } else if (ev.keyCode == 39) {
+                    Game.key_37 = false;
+                }
+            }
+            if (ev.type == 'keyup') {
+                Game['key_'+ev.keyCode] = false;
+            }
         }
     },
     layout: function(ev) {
