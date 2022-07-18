@@ -2,6 +2,8 @@ window.onload = function() {
     Game.init();
 }
 
+let a = 0;
+let b = 0;
 
 
 VAR = {
@@ -10,33 +12,19 @@ VAR = {
     H: 0,
     lastTime: 0,
     lastUpdate: -1,
-    toRadians: Math.PI/180,
     rand: function(min, max) {
         return Math.floor(Math.random()*(max-min+1)+min);
-    },
-        drawImage: function(image, x, y, angle) {
-        context.save(); 
-        context.translate(x, y);
-        context.rotate(angle * TO_RADIANS);
-        context.drawImage(image, -(image.width/2), -(image.height/2));
-        context.restore(); 
     }
 }
 
 Game = {
     init: function() {
         Game.canvas = document.createElement('canvas');
-        Game.imageCanvas = document.createElement('canvas');
+        Game.hit_canvas = document.createElement('canvas');
         Game.ctx = Game.canvas.getContext('2d');
-        Game.imageCtx = Game.imageCanvas.getContext('2d');
+        Game.hit_ctx = Game.hit_canvas.getContext('2d');
+        // document.body.appendChild(Game.hit_canvas);
         document.body.appendChild(Game.canvas);
-        document.body.appendChild(Game.imageCanvas);
-        let shipImg = new Image();
-        shipImg.onload = showImg;
-        shipImg.src = 'ship.png';
-        function showImg() {
-            // Game.imageCtx.drawImage(shipImg, 100, 100);
-        }
         Game.layout();
         
         //
@@ -75,13 +63,14 @@ Game = {
         //
         Game.canvas.width = VAR.W;
         Game.canvas.height = VAR.H;
-        Game.imageCanvas.width = VAR.W;
-        Game.imageCanvas.height = VAR.H;
+        Game.hit_canvas.width = VAR.W;
+        Game.hit_canvas.height = VAR.H;
         //
         Game.ctx.fillStyle = 'black';
         Game.ctx.strokeStyle = 'black';
         Game.ctx.lineWidth = 1;
         Game.ctx.lineJoin = 'round';
+        Game.hit_ctx.fillStyle = 'pink';
 
     },
     animationLoop: function(time) {
@@ -89,9 +78,10 @@ Game = {
         if (time-VAR.lastTime>=1000/VAR.fps) {
             VAR.lastTime = time;
             Game.ctx.clearRect(0,0,VAR.W, VAR.H);
+            Game.hit_ctx.clearRect(0,0,VAR.W, VAR.H);
             Game.ship.draw();
-            Bullet.draw();
             Rock.draw();
+            Bullet.draw();
         }
         
     }
