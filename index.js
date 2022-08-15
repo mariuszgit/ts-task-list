@@ -38,6 +38,10 @@ Game = {
         window.addEventListener('keyup', Game.onKey, false);
         Game.animationLoop();
     },
+    stop: function() {
+        window.removeEventListener('keydown', Game.onKey, false);
+        window.removeEventListener('keyup', Game.onKey, false);
+    },
     onKey: function(ev) {
         if (ev.keyCode==32 || ev.keyCode==37 || ev.keyCode==38 || ev.keyCode==39) {
             ev.preventDefault();
@@ -70,7 +74,7 @@ Game = {
         Game.ctx.strokeStyle = 'black';
         Game.ctx.lineWidth = 1;
         Game.ctx.lineJoin = 'round';
-        Game.hit_ctx.fillStyle = 'pink';
+        Game.hit_ctx.fillStyle = 'red';
 
     },
     animationLoop: function(time) {
@@ -79,9 +83,10 @@ Game = {
             VAR.lastTime = time;
             Game.ctx.clearRect(0,0,VAR.W, VAR.H);
             Game.hit_ctx.clearRect(0,0,VAR.W, VAR.H);
-            Game.ship.draw();
+            
             Rock.draw();
             Bullet.draw();
+            Game.ship.draw();
         }
         
     }
