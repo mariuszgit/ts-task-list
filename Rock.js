@@ -37,6 +37,8 @@ function Rock(size, x, y) {
 Rock.prototype.hitTest = function(x,y) {
     if (x>this.x - this.r*VAR.D && x<this.x + this.r*VAR.D && y>this.y - this.r*VAR.D && y<this.y + this.r*VAR.D) {
         if (Game.hit_ctx.getImageData(x,y,1,1).data[0]==255) {
+            // score.value++;
+            score.change(this.size);
             return true;
         }
     }

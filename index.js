@@ -19,12 +19,16 @@ VAR = {
 
 Game = {
     init: function() {
+        Game.scoreBox = document.createElement('div');
         Game.canvas = document.createElement('canvas');
         Game.hit_canvas = document.createElement('canvas');
         Game.ctx = Game.canvas.getContext('2d');
         Game.hit_ctx = Game.hit_canvas.getContext('2d');
         // document.body.appendChild(Game.hit_canvas);
         document.body.appendChild(Game.canvas);
+        document.body.appendChild(Game.scoreBox);
+        Game.scoreBox.classList.add('score-box');
+        Game.scoreBox.innerText = `Score: ${score.value}`;
         Game.layout();
         
         //
@@ -52,6 +56,8 @@ Game = {
                 } else if (ev.keyCode == 39) {
                     Game.key_37 = false;
                 } else if (ev.keyCode == 32) {
+                    // score++;
+                    // Game.scoreBox.innerText = `Score: ${score}`;
                     new Bullet();
                 } 
             }
