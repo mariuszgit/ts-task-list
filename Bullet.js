@@ -58,7 +58,8 @@ Bullet.draw = function() {
             Game.ctx.beginPath();
             Game.ctx.arc(Bullet.all[b].x, Bullet.all[b].y, 3, 0,Math.PI/180*360);
             Game.ctx.closePath();
-            Game.ctx.fill ();
+            Game.ctx.fillStyle="yellow";
+            Game.ctx.fill();
             //
 
 

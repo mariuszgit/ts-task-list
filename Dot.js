@@ -15,6 +15,7 @@ Dot.prototype.draw = function() {
     this.x += this.modX;
     this.y += this.modY;
     this.d++;
+    Game.ctx.fillStyle="yellow";
     Game.ctx.fillRect(this.x,this.y, 3, 3);
     if(this.d>Dot.max_d) {
         delete Dot.all[this.id];

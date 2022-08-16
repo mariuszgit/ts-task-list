@@ -76,8 +76,8 @@ Game = {
         Game.hit_canvas.width = VAR.W;
         Game.hit_canvas.height = VAR.H;
         //
-        Game.ctx.fillStyle = 'black';
-        Game.ctx.strokeStyle = 'black';
+        Game.ctx.fillStyle = 'white';
+        Game.ctx.strokeStyle = 'white';
         Game.ctx.lineWidth = 1;
         Game.ctx.lineJoin = 'round';
         Game.hit_ctx.fillStyle = 'red';
@@ -88,6 +88,8 @@ Game = {
         if (time-VAR.lastTime>=1000/VAR.fps) {
             VAR.lastTime = time;
             Game.ctx.clearRect(0,0,VAR.W, VAR.H);
+            Game.ctx.fillStyle = 'black';
+            Game.ctx.fillRect(0,0,VAR.W, VAR.H);
             Game.hit_ctx.clearRect(0,0,VAR.W, VAR.H);
             
             Rock.draw();
