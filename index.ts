@@ -1,5 +1,4 @@
 'use strict'
-
 // const input2: HTMLInputElement = document.querySelector('#input2') as HTMLInputElement;
 // const input1: HTMLInputElement = document.querySelector('#input1');
 // const button = document.querySelector('button');
@@ -32,19 +31,20 @@
     <label for="task-1">Wyrzucić śmieci</label>
     <input type="checkbox" id="task-1" name="Wyrzucić śmieci" />
 </li> */
+import { show } from "./foo"
+show();
 
 const taskNameInputElement: HTMLInputElement = document.querySelector('#name')!;
 const addButtonElement: HTMLButtonElement = document.querySelector('button')!;
 const tasksContainerElement: HTMLElement = document.querySelector('ul.tasks')!;
 const categoriesContainerElement: HTMLElement = document.querySelector('.categories')!;
 
-
-
 const tasks: Task[] = [{name: 'Wyrzucić śmieci',  done: true}, {name: 'Nakarmić kota',  done: false, category: 'general'}];
 const categories: Category[] = ['general', 'work', 'hobby'];
 let selectedCategory: Category;
 
 type Category = 'general' | 'work' | 'hobby';
+
 
 interface Task {
     name: string;
@@ -96,7 +96,8 @@ const renderCategories = () => {
     inputEl.id = id;
     inputEl.value = category;
     inputEl.addEventListener('change', () => {
-      selectedCategory = category;
+      // selectedCategory = category;
+      selectCategory(category);
     })
 
     const labelEl: HTMLLabelElement = document.createElement('label');
@@ -113,6 +114,10 @@ renderCategories();
 
 const addTask = (task: Task) => {
   tasks.push(task);
+};
+
+const selectCategory = (newCategory: Category) => {
+  selectedCategory = newCategory;
 };
 
 addButtonElement.addEventListener("click", (ev) => {
